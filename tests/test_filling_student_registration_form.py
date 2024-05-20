@@ -2,7 +2,7 @@ from selene import browser, have, command
 import os
 
 
-def test_filling_student_registration_form():
+def test_filling_student_registration_form(setting_browser):
     '''
     Заполнение формы
     '''
