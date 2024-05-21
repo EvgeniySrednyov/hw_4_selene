@@ -1,38 +1,28 @@
-from selene import browser, have, command
-import os
+from hw_4_selene.pages.registration_page import RegistrationPage
 
 
 def test_filling_student_registration_form(setting_browser):
-    '''
-    Заполнение формы
-    '''
-    browser.open('https://demoqa.com/automation-practice-form')
-    browser.element('#firstName').type('Евгений')
-    browser.element('#lastName').type('Иванов')
-    browser.element('#userEmail').type('evgen@gmail.com')
-    browser.element('#gender-radio-1').perform(command.js.click)
-    browser.element('#userNumber').type('1234567890')
-    browser.element('#dateOfBirthInput').click()
-    browser.all('[class=react-datepicker__year-select]>[value]').element_by(have.exact_text('1989')).click()
-    browser.all('[class=react-datepicker__month-select]>[value]').element_by(have.exact_text('February')).click()
-    browser.all('[class=react-datepicker__week]').second.click()
-    browser.element('#subjectsInput').type('English').press_enter()
-    browser.element('#hobbies-checkbox-3').perform(command.js.click)
-    browser.element('#uploadPicture').send_keys(os.path.abspath(
-        '../cat.png'))
-    browser.element('#currentAddress').perform(command.js.scroll_into_view).click()
-    browser.element('#currentAddress').type('Мой адрес не дом и не улица 25/17')
-    browser.element('#state').click()
-    browser.element('#react-select-3-option-2').click()
-    browser.element('#city').click()
-    browser.element('#react-select-4-option-1').click()
-    browser.element('#submit').click()
+
+    registration_page = RegistrationPage()
+    registration_page.open()
+    registration_page.fill_first_name('Евгений')
+    registration_page.fill_last_name('Иванов')
+    registration_page.fill_user_email('evgen@gmail.com')
+    registration_page.select_gender('Male')
+    registration_page.fill_mobile_number('1234567890')
+    registration_page.fill_date_of_birth('1989', 'February', '8')
+    registration_page.fill_subjects('English')
+    registration_page.select_hobbies('Music')
+    registration_page.upload_picture('cat.png')
+    registration_page.fill_current_address('Мой адрес не дом и не улица 25/17')
+    registration_page.select_state('Haryana')
+    registration_page.select_city('Panipat')
+    registration_page.submit()
 
     '''
     Проверка заполнения полей формы
     '''
-    browser.element('.table').all('td').even.should(
-        have.exact_texts(
+    registration_page.should_have_registered_user_with(
         'Евгений Иванов',
         'evgen@gmail.com',
         'Male',
@@ -42,4 +32,5 @@ def test_filling_student_registration_form(setting_browser):
         'Music',
         'cat.png',
         'Мой адрес не дом и не улица 25/17',
-        'Haryana Panipat'))
+        'Haryana Panipat'
+    )
