@@ -1,6 +1,6 @@
-import os
-
 from selene import browser, have, by, command
+
+import resource
 
 
 class RegistrationPage:
@@ -33,9 +33,8 @@ class RegistrationPage:
     def select_hobbies(self, value):
         browser.all('.custom-checkbox').element_by(have.exact_text(value)).click()
 
-    def upload_picture(self, value):
-        browser.element('#uploadPicture').send_keys(os.path.abspath(
-            f'../{value}'))
+    def upload_picture(self, file):
+        browser.element('#uploadPicture').send_keys(resource.path(file))
 
     def fill_current_address(self, value):
         browser.element('#currentAddress').perform(command.js.scroll_into_view).click()

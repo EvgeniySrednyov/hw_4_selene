@@ -1,4 +1,4 @@
-from hw_4_selene.pages.registration_page import RegistrationPage
+from pages.registration_page import RegistrationPage
 
 
 def test_filling_student_registration_form(setting_browser):
