@@ -1,6 +1,6 @@
 .allure_result/
 .tests/allure-result
-
+.env
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
